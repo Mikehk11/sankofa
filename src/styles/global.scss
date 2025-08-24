@@ -1,0 +1,56 @@
+/* ==== Sankofa base (SCSS) ==== */
+:root {
+  /* brand */
+  --bg: #E9E3D3;         /* warm sand */
+  --fg: #0F2430;         /* ink navy */
+  --primary: #D8C9A8;    /* sand-strong */
+  --secondary: #6F8A8F;  /* teal-muted */
+
+  /* surfaces */
+  --card: #FFFFFF;
+  --border: #D6D0C2;     /* a bit darker for better light contrast */
+  --sidebar-bg: #F6F1E6; /* subtle tint behind sidebar */
+
+  /* layout */
+  --header-h: 64px;
+  --sidebar-w: 260px;
+  --radius: 14px;
+}
+
+.dark {
+  --bg: #0F2430;
+  --fg: #E9E3D3;
+  --card: #14313C;
+  --border: #2A3A41;
+  --sidebar-bg: #0E2A36; /* slightly different from main bg for separation */
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial;
+  line-height: 1.4;
+}
+
+.mono { font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+.container { max-width: 1400px; margin: 0 auto; padding: 0 16px; }
+
+/* Content area shifted by sidebar on desktop */
+.main { padding: 24px 16px; padding-left: calc(16px + var(--sidebar-w)); }
+@media (max-width: 900px) { .main { padding-left: 16px; } }
+
+/* Basic button */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 14px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--primary); color: #0F2430;
+  cursor: pointer; transition: transform .15s ease, filter .15s ease;
+}
+.btn:hover { transform: translateY(-1px); filter: brightness(.98); }
+
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 16px; }

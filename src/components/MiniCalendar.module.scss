@@ -1,0 +1,11 @@
+.wrap { display: grid; gap: 12px; }
+.head { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; font-size: 12px; opacity: .7; }
+.grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; }
+.cell {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 6px; min-height: 64px;
+}
+.today { outline: 2px solid var(--secondary); }
+.dots { font-size: 11px; opacity: .7; margin-top: 6px; }
+.upnext { display: grid; gap: 8px; }
+.item { font-size: 14px; }

@@ -1,0 +1,170 @@
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/components/docs/Docs.module.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/* Layout */
+.Docs_wrap__gxTPu {
+  display: grid;
+  grid-gap: 16px;
+  gap: 16px;
+  grid-template-columns: minmax(260px, 320px) 1fr; /* left column grows a little */
+  align-items: start;
+}
+
+@media (max-width: 1000px) {
+  .Docs_wrap__gxTPu {
+    grid-template-columns: 1fr;
+  }
+}
+/* Left list */
+.Docs_sidebar__RIltM {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 12px;
+  display: grid;
+  grid-gap: 10px;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+.Docs_headRow__CJCvO,
+.Docs_itemRow__dl3d8 {
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-gap: 8px;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Shrink the Type + Actions columns so they never bleed over the card */
+.Docs_headRow__CJCvO {
+  grid-template-columns: 1fr 72px 160px;
+  padding: 6px 8px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.Docs_itemRow__dl3d8 {
+  grid-template-columns: 1fr 72px minmax(160px, 1fr);
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+/* Title cell truncates long names */
+.Docs_titleCell__Zilgp {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  overflow: hidden;
+}
+
+.Docs_titleCell__Zilgp span:last-child {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.Docs_badge__6VmGK {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+/* Actions wrap on smaller widths */
+.Docs_actions__agkWI {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.Docs_miniBtn__fDVth {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--primary);
+  color: #0F2430;
+  white-space: nowrap;
+}
+
+.Docs_danger__ac_jH {
+  background: #ffebe9;
+  color: #7a0000;
+}
+
+/* Right pane (editor / preview) */
+.Docs_editorCard__Mue5a, .Docs_previewCard__lw22N {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px;
+  display: grid;
+  grid-gap: 12px;
+  gap: 12px;
+}
+
+.Docs_toolbar__tJKcq {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.Docs_backBtn__nhUX_ {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.Docs_title__NaTC_, .Docs_inp__w21gi {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.Docs_area__a0bDY {
+  width: 100%;
+  min-height: 260px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+.Docs_previewBox__qKrwX {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  background: var(--bg);
+}
+
+.Docs_linkList__2_mVR {
+  display: grid;
+  grid-gap: 6px;
+  gap: 6px;
+}
+
+.Docs_linkItem__J5X2g {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  overflow-wrap: anywhere;
+}
+
+/* Make the two-column editor section behave on smaller widths */
+@media (max-width: 1100px) {
+  .Docs_editorGridTwoCol__LhpTi {
+    grid-template-columns: 1fr !important;
+  }
+}

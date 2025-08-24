@@ -1,0 +1,143 @@
+/* Layout */
+.wrap {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(260px, 320px) 1fr; /* left column grows a little */
+  align-items: start;
+}
+@media (max-width: 1000px) {
+  .wrap { grid-template-columns: 1fr; }
+}
+
+/* Left list */
+.sidebar {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+.headRow,
+.itemRow {
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Shrink the Type + Actions columns so they never bleed over the card */
+.headRow {
+  grid-template-columns: 1fr 72px 160px;
+  padding: 6px 8px;
+  font-size: 12px;
+  opacity: .7;
+}
+.itemRow {
+  grid-template-columns: 1fr 72px minmax(160px, 1fr);
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+/* Title cell truncates long names */
+.titleCell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  overflow: hidden;
+}
+.titleCell span:last-child {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+/* Actions wrap on smaller widths */
+.actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.miniBtn {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--primary);
+  color: #0F2430;
+  white-space: nowrap;
+}
+.danger { background: #ffebe9; color: #7a0000; }
+
+/* Right pane (editor / preview) */
+.editorCard, .previewCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.backBtn {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.title, .inp {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.area {
+  width: 100%;
+  min-height: 260px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+.previewBox {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  background: var(--bg);
+}
+
+.linkList { display: grid; gap: 6px; }
+.linkItem { display: flex; gap: 8px; align-items: center; overflow-wrap: anywhere; }
+
+/* Make the two-column editor section behave on smaller widths */
+@media (max-width: 1100px) {
+  .editorGridTwoCol {
+    grid-template-columns: 1fr !important;
+  }
+}

@@ -1,0 +1,292 @@
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/components/GoalRow.module.scss ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.GoalRow_row__Da2C2 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-gap: 16px;
+  gap: 16px;
+}
+
+@media (max-width: 1100px) {
+  .GoalRow_row__Da2C2 {
+    grid-template-columns: 1fr;
+  }
+}
+.GoalRow_card__Krg_N {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 14px;
+  display: grid;
+  grid-gap: 10px;
+  gap: 10px;
+}
+
+.GoalRow_cardHead__ZCigO {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.GoalRow_cardHead__ZCigO h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+.GoalRow_cardHead__ZCigO strong {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.GoalRow_bullets__EjRaZ {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  grid-gap: 2px;
+  gap: 2px;
+}
+.GoalRow_bullets__EjRaZ li {
+  line-height: 1.4;
+}
+
+.GoalRow_track__yYDXW {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.GoalRow_fill__o8VUT {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--primary);
+}
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/components/AvatarRow.module.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.AvatarRow_row__4OHCc {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.AvatarRow_avatar__IfBES {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  position: relative;
+}
+
+.AvatarRow_dot__6ctnu {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--card);
+  background: #9aa0a6; /* offline grey */
+}
+
+.AvatarRow_online__FbYqs {
+  background: #2ecc71;
+} /* online green */
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/components/ChatDrawer.module.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.ChatDrawer_overlay__CFcRT {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 300;
+}
+
+.ChatDrawer_drawer__6hKap {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100dvh;
+  width: min(420px, 100%);
+  background: var(--bg);
+  border-left: 1px solid var(--border);
+  display: grid;
+  grid-template-rows: 56px 1fr 56px;
+  z-index: 301;
+}
+
+.ChatDrawer_head__z_a3o {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ChatDrawer_body__hR9uu {
+  padding: 12px;
+  overflow: auto;
+  display: grid;
+  grid-gap: 10px;
+  gap: 10px;
+}
+
+.ChatDrawer_msg__QGp3P {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  max-width: 75%;
+}
+
+.ChatDrawer_me__8cvHR {
+  justify-self: end;
+}
+
+.ChatDrawer_inputRow__OI5WN {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
+}
+
+.ChatDrawer_inp__nH2Rp {
+  flex: 1 1;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--fg);
+}
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/components/MiniCalendar.module.scss ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.MiniCalendar_wrap__sjnHK {
+  display: grid;
+  grid-gap: 12px;
+  gap: 12px;
+}
+
+.MiniCalendar_head__McuiP {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 6px;
+  gap: 6px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.MiniCalendar_grid__Uideg {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 6px;
+  gap: 6px;
+}
+
+.MiniCalendar_cell__C7Xnt {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px;
+  min-height: 64px;
+}
+
+.MiniCalendar_today__5SdoY {
+  outline: 2px solid var(--secondary);
+}
+
+.MiniCalendar_dots__MQIRd {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-top: 6px;
+}
+
+.MiniCalendar_upnext__FjDux {
+  display: grid;
+  grid-gap: 8px;
+  gap: 8px;
+}
+
+.MiniCalendar_item__yRbwV {
+  font-size: 14px;
+}
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/components/projects/Projects.module.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.Projects_grid__he20x {
+  display: grid;
+  grid-gap: 12px;
+  gap: 12px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 900px) {
+  .Projects_grid__he20x {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.Projects_card__3qKEd {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.Projects_row__Vyxgv {
+  display: grid;
+  grid-gap: 8px;
+  gap: 8px;
+}
+
+.Projects_bar__3_dtQ {
+  height: 8px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.Projects_fill__721CT {
+  height: 100%;
+  background: var(--secondary);
+}
+
+.Projects_form__SuiPJ {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.Projects_input___R8BL, .Projects_date__BDy9N {
+  flex: 1 1;
+  min-width: 220px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--fg);
+}
+
+.Projects_smallBtn__feqkY {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--primary);
+  color: #0F2430;
+}
+
+.Projects_del__kMNKF {
+  margin-left: auto;
+  opacity: 0.8;
+  cursor: pointer;
+}

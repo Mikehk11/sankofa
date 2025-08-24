@@ -1,0 +1,18 @@
+.row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+.avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  cursor: pointer; user-select: none;
+  position: relative;
+}
+
+.dot {
+  position: absolute; right: -2px; bottom: -2px;
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 2px solid var(--card);
+  background: #9aa0a6; /* offline grey */
+}
+.online { background: #2ecc71; } /* online green */

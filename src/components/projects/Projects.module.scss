@@ -1,0 +1,23 @@
+.grid { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 900px){ .grid { grid-template-columns: repeat(3,1fr); } }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.row { display: grid; gap: 8px; }
+
+.bar { height: 8px; background: rgba(0,0,0,.15); border-radius: 999px; overflow: hidden; }
+.fill { height: 100%; background: var(--secondary); }
+
+.form { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.input, .date {
+  flex: 1; min-width: 220px;
+  padding: 8px 10px; border: 1px solid var(--border);
+  border-radius: 10px; background: var(--card); color: var(--fg);
+}
+.smallBtn { padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--primary); color: #0F2430; }
+.del { margin-left: auto; opacity: .8; cursor: pointer; }

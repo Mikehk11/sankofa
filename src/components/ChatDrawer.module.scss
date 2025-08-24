@@ -1,0 +1,16 @@
+.overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.35);
+  z-index: 300;
+}
+.drawer {
+  position: fixed; top: 0; right: 0; height: 100dvh; width: min(420px, 100%);
+  background: var(--bg); border-left: 1px solid var(--border);
+  display: grid; grid-template-rows: 56px 1fr 56px;
+  z-index: 301;
+}
+.head { display: flex; align-items: center; padding: 0 12px; border-bottom: 1px solid var(--border); }
+.body { padding: 12px; overflow: auto; display: grid; gap: 10px; }
+.msg  { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 10px; max-width: 75%; }
+.me   { justify-self: end; }
+.inputRow { display: flex; gap: 8px; align-items: center; padding: 8px 12px; border-top: 1px solid var(--border); }
+.inp { flex: 1; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--card); color: var(--fg); }

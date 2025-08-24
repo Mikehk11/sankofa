@@ -1,0 +1,79 @@
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/components/kanban/Kanban.module.scss ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.Kanban_board__OExZK {
+  display: grid;
+  grid-gap: 12px;
+  gap: 12px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1000px) {
+  .Kanban_board__OExZK {
+    grid-template-columns: 1fr;
+  }
+}
+.Kanban_column__stOuo {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 260px;
+}
+
+.Kanban_colHead__lFpLs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px 10px 6px;
+}
+
+.Kanban_count__nC3QC {
+  margin-left: auto;
+  opacity: 0.7;
+}
+
+.Kanban_list__uDJEA {
+  display: grid;
+  grid-gap: 8px;
+  gap: 8px;
+}
+
+.Kanban_card__scOF9 {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.Kanban_card__scOF9:active {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+.Kanban_addRow__Ze3Mn {
+  display: flex;
+  gap: 8px;
+  padding: 10px 6px 6px;
+}
+
+.Kanban_input__8J7W7 {
+  flex: 1 1;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--fg);
+}
+
+.Kanban_smallBtn__OvO7F {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--primary);
+  color: #0F2430;
+}

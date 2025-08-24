@@ -1,0 +1,35 @@
+.board {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 1000px) {
+  .board { grid-template-columns: 1fr; }
+}
+
+.column {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 260px;
+}
+.colHead { display:flex; align-items:center; gap:8px; padding:6px 6px 10px 6px; }
+.count { margin-left:auto; opacity:.7; }
+
+.list { display: grid; gap: 8px; }
+
+.card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  cursor: grab;
+}
+.card:active { cursor: grabbing; }
+
+.addRow { display:flex; gap:8px; padding:10px 6px 6px; }
+.input { flex:1; padding:8px 10px; border:1px solid var(--border); border-radius:10px; background: var(--card); color: var(--fg); }
+.smallBtn { padding:8px 10px; border-radius:10px; border:1px solid var(--border); background: var(--primary); color:#0F2430; }
