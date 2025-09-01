@@ -1,38 +1,23 @@
 "use client";
+
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { User } from "@/data/users";
-import { USERS } from "@/data/users";
 
-type UsersState = {
-  users: User[];
-  add: (u: Omit<User, "id"> & { id?: string }) => void;
-  update: (id: string, patch: Partial<User>) => void;
-  remove: (id: string) => void;
-  toggleOnline: (id: string) => void;
+export type LocalUser = { id: string; name: string } | null;
+
+type UserState = {
+  user: LocalUser;
+  setUser: (u: NonNullable<LocalUser>) => void;
+  clearUser: () => void;
 };
 
-export const useUsers = create<UsersState>()(
+export const useUser = create<UserState>()(
   persist(
     (set) => ({
-      users: USERS,
-      add: (u) =>
-        set((s) => ({
-          users: [...s.users, { id: u.id ?? crypto.randomUUID(), ...u }],
-        })),
-      update: (id, patch) =>
-        set((s) => ({
-          users: s.users.map((x) => (x.id === id ? { ...x, ...patch } : x)),
-        })),
-      remove: (id) =>
-        set((s) => ({ users: s.users.filter((x) => x.id !== id) })),
-      toggleOnline: (id) =>
-        set((s) => ({
-          users: s.users.map((x) =>
-            x.id === id ? { ...x, online: !x.online } : x
-          ),
-        })),
+      user: null,
+      setUser: (u) => set({ user: u }),
+      clearUser: () => set({ user: null }),
     }),
-    { name: "sankofa-users" }
+    { name: "sankofa_user" } // localStorage key
   )
 );

@@ -1,31 +1,54 @@
-"use client";
+// src/state/projects.ts
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import type { Project } from "@/data/projects";
-import { PROJECTS } from "@/data/projects";
+import { nanoid } from "nanoid";
 
-type ProjectsState = {
-  projects: Project[];
-  add: (p: Omit<Project, "id"> & { id?: string }) => void;
-  update: (id: string, patch: Partial<Project>) => void;
-  remove: (id: string) => void;
+export type Project = {
+  id: string;
+  name: string;
+  due?: Date;
+  archived?: boolean;
 };
 
-export const useProjects = create<ProjectsState>()(
-  persist(
-    (set) => ({
-      projects: PROJECTS,
-      add: (p) =>
-        set((s) => ({
-          projects: [...s.projects, { id: p.id ?? crypto.randomUUID(), ...p }],
-        })),
-      update: (id, patch) =>
-        set((s) => ({
-          projects: s.projects.map((x) => (x.id === id ? { ...x, ...patch } : x)),
-        })),
-      remove: (id) =>
-        set((s) => ({ projects: s.projects.filter((x) => x.id !== id) })),
+type ProjectsState = {
+  projects: Record<string, Project>;
+  order: string[];
+  addProject: (name: string, due?: Date) => void;
+  setProjectName: (id: string, name: string) => void;
+  setProjectDue: (id: string, due?: Date) => void;
+  archiveProject: (id: string, archived: boolean) => void;
+};
+
+export const useProjects = create<ProjectsState>()((set, get) => ({
+  projects: {},
+  order: [],
+
+  addProject: (name, due) =>
+    set((s) => {
+      const id = nanoid(6);
+      return {
+        projects: { ...s.projects, [id]: { id, name, due } },
+        order: [id, ...s.order],
+      };
     }),
-    { name: "sankofa-projects" }
-  )
-);
+
+  setProjectName: (id, name) =>
+    set((s) => {
+      const p = s.projects[id];
+      if (!p) return s;
+      return { projects: { ...s.projects, [id]: { ...p, name } } };
+    }),
+
+  setProjectDue: (id, due) =>
+    set((s) => {
+      const p = s.projects[id];
+      if (!p) return s;
+      return { projects: { ...s.projects, [id]: { ...p, due } } };
+    }),
+
+  archiveProject: (id, archived) =>
+    set((s) => {
+      const p = s.projects[id];
+      if (!p) return s;
+      return { projects: { ...s.projects, [id]: { ...p, archived } } };
+    }),
+}));

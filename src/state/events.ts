@@ -10,6 +10,7 @@ export type CalendarEvent = {
   end?: string;       // ISO datetime
   location?: string;
   projectId?: string;
+  link?: string;      // NEW: meeting link (https://…)
 };
 
 const SEED: CalendarEvent[] = [

@@ -1,56 +1,219 @@
-/* ==== Sankofa base (SCSS) ==== */
-:root {
-  /* brand */
-  --bg: #E9E3D3;         /* warm sand */
-  --fg: #0F2430;         /* ink navy */
-  --primary: #D8C9A8;    /* sand-strong */
-  --secondary: #6F8A8F;  /* teal-muted */
+/* ---------- Font (modern “coding” vibe that still reads well) ---------- */
+/* JetBrains Mono has a crisp developer feel and excellent numerals. */
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+:root { --font-sans: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 
-  /* surfaces */
-  --card: #FFFFFF;
-  --border: #D6D0C2;     /* a bit darker for better light contrast */
-  --sidebar-bg: #F6F1E6; /* subtle tint behind sidebar */
-
-  /* layout */
-  --header-h: 64px;
-  --sidebar-w: 260px;
-  --radius: 14px;
-}
-
-.dark {
-  --bg: #0F2430;
-  --fg: #E9E3D3;
-  --card: #14313C;
-  --border: #2A3A41;
-  --sidebar-bg: #0E2A36; /* slightly different from main bg for separation */
-}
-
+/* ---------- Reset / Base ---------- */
 * { box-sizing: border-box; }
 html, body { height: 100%; }
-
 body {
   margin: 0;
+  font-family: var(--font-sans);
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+
+  /* layout helpers so content stretches and aligns left */
+  display: grid;
+  align-items: start;
+  gap: 16px;
+}
+
+/* Branding hook (if you want to tint the logo chip later) */
+.brand { display: inline-flex; align-items: center; gap: 8px; }
+
+/* ---------- Surfaces ---------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+  width: 100%;
+}
+
+/* ---------- Buttons ---------- */
+button, .btn, .btn-secondary, .btn-destructive { cursor: pointer; font: inherit; }
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--accent) 55%, var(--border));
+  background: var(--accent);
+  color: var(--accent-contrast);
+  transition: filter .12s ease, transform .02s ease;
+}
+.btn:hover { filter: brightness(1.05); }
+.btn:active { transform: translateY(1px); }
+
+.btn-secondary {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--pill-border-active);
+  background: var(--pill-active);
+  color: var(--fg);
+}
+
+.btn-destructive {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, #7a3030 65%, var(--border));
+  background: #7a3030;
+  color: #fff;
+}
+
+/* ---------- Inputs ---------- */
+input, select, textarea { outline: none; }
+input, select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial;
-  line-height: 1.4;
+}
+textarea {
+  width: 100%;
+  min-height: 200px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--fg);
+  padding: 12px;
 }
 
-.mono { font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-
-.container { max-width: 1400px; margin: 0 auto; padding: 0 16px; }
-
-/* Content area shifted by sidebar on desktop */
-.main { padding: 24px 16px; padding-left: calc(16px + var(--sidebar-w)); }
-@media (max-width: 900px) { .main { padding-left: 16px; } }
-
-/* Basic button */
-.btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 10px 14px; border-radius: 10px;
-  border: 1px solid var(--border); background: var(--primary); color: #0F2430;
-  cursor: pointer; transition: transform .15s ease, filter .15s ease;
+/* ---------- Pills (top nav) ---------- */
+.pill {
+  border: 1px solid var(--pill-border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  color: var(--fg);
 }
-.btn:hover { transform: translateY(-1px); filter: brightness(.98); }
+.pill--active {
+  background: var(--pill-active);
+  border-color: var(--pill-border-active);
+}
 
-.card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 16px; }
+/* ---------- Utility ---------- */
+.sr-only {
+  position: absolute !important; height: 1px; width: 1px; overflow: hidden;
+  clip: rect(1px,1px,1px,1px); white-space: nowrap; border: 0; padding: 0; margin: -1px;
+}
+
+/* Simple vertical stack that keeps children full-width */
+.stack { display: grid; gap: 16px; }
+
+/* Reusable 3-column form row (text, date, button) */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 160px auto;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Two-column grid used on Calendar */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+@media (max-width: 920px) {
+  .calendar-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- Gantt helpers (use theme colors instead of hard-coded greens) ---------- */
+.gantt-row {
+  position: relative;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-2);
+  overflow: hidden;
+}
+.gantt-label {
+  position: absolute;
+  left: 10px;
+  top: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: .95;
+  pointer-events: none;
+}
+.gantt-bar {
+  position: absolute;
+  top: 24px;     /* leaves space for label above */
+  height: 10px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, color-mix(in oklab, var(--bar-good) 85%, transparent), var(--bar-good));
+}
+
+/* ---------- Modern Select (used in Reports) ---------- */
+.select {
+  position: relative;
+  display: inline-flex;
+}
+.select select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 10px 36px 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.2;
+}
+.select::after {
+  content: "▾";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: .7;
+}
+.select select:focus {
+  outline: 2px solid color-mix(in srgb, var(--brand) 28%, transparent);
+  outline-offset: 2px;
+  border-color: color-mix(in srgb, var(--brand) 34%, var(--border));
+}
+
+/* ---------- App shell: sticky footer ---------- */
+body.app-shell {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Make main content take the remaining height so footer is pushed down */
+main.container { flex: 1 0 auto; }
+
+/* ---------- Footer (compact + full-width bg) ---------- */
+.footer {
+  margin-top: 8px;                 /* smaller gap above */
+  padding: 12px 0 18px;            /* tighter vertical rhythm */
+  border-top: 1px solid var(--border);
+  background: var(--footer-bg);    /* theme-aware background */
+  color: var(--muted);
+}
+.footer .grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+.footer .brandline { display: inline-flex; align-items: center; gap: 10px; }
+.footer .links { display: flex; gap: 14px; flex-wrap: wrap; }
+.footer a { color: inherit; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+.footer .muted { opacity: .8; }

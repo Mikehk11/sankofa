@@ -1,45 +1,30 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import styles from "./Sidebar.module.scss";
-
-type Item = { href: string; label: string; icon: string };
-
-const NAV: Item[] = [
-  { href: "/dashboard", label: "Dashboard", icon: "🏠" },
-  { href: "/tasks",     label: "Tasks",     icon: "🧩" },
-  { href: "/projects",  label: "Projects",  icon: "📊" }, 
-  { href: "/calendar",  label: "Calendar",  icon: "📅" },
-  { href: "/chat",      label: "Chat",      icon: "💬" },
-  { href: "/docs",      label: "Docs",      icon: "📄" },
-  { href: "/settings",  label: "Settings",  icon: "⚙️" },
-];
-
 export default function Sidebar() {
-  const pathname = usePathname();
+  const Item = ({ href, label, emoji }: { href: string; label: string; emoji: string }) => (
+    <a href={href} style={{
+      display: "flex", alignItems: "center", gap: 10,
+      padding: "10px 14px", borderRadius: 10, color: "inherit", textDecoration: "none"
+    }}>
+      <span>{emoji}</span><span>{label}</span>
+    </a>
+  );
 
   return (
-    <aside className={styles.sidebar}>
-      <div className={styles.brand}>
-        <img src="/public/logo-sankofa.svg" alt="" height={20} width={20} />
-        <span>Sankofa</span>
+    <aside style={{ padding: 16 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+        <img src="/logo-sankofa.svg" width={24} height={24} alt="Sankofa" />
+        <strong>Sankofa</strong>
       </div>
 
-      <nav className={styles.nav}>
-        {NAV.map(({ href, label, icon }) => {
-          const active = pathname === href;
-          return (
-            <Link
-              key={href}
-              href={href}
-              className={`${styles.link} ${active ? styles.active : ""}`}
-            >
-              <span className={styles.icon}>{icon}</span>
-              <span className={styles.label}>{label}</span>
-            </Link>
-          );
-        })}
+      <nav style={{ display: "grid", gap: 6 }}>
+        <Item href="/dashboard" label="Dashboard" emoji="🏠" />
+        <Item href="/tasks"     label="Tasks"     emoji="🧩" />
+        <Item href="/projects"  label="Projects"  emoji="📊" />
+        <Item href="/calendar"  label="Calendar"  emoji="📆" />
+        <Item href="/docs"      label="Docs"      emoji="📄" />
+        <Item href="/chat"      label="Chat"      emoji="💬" />
+        <Item href="/settings"  label="Settings"  emoji="⚙️" />
       </nav>
     </aside>
   );

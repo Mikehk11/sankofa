@@ -1,73 +1,76 @@
-"use client";
+// src/state/tasks.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { nanoid } from "nanoid";
 
-export type Status = "todo" | "inprogress" | "done";
+export type TaskStatus = "todo" | "doing" | "review" | "done";
 
 export type Task = {
   id: string;
   title: string;
-  status: Status;
-  projectId?: string;
-  assigneeId?: string;
-  due?: string;         // ISO date
-  createdAt: string;    // ISO datetime
-  doneAt?: string;      // ISO datetime
+  status: TaskStatus;
+  projectId: string;
+  assignees: string[];       // NEW
+  createdAt: number;
 };
 
 type TasksState = {
   tasks: Task[];
-  addTask: (t: Omit<Task, "id" | "createdAt"> & { id?: string }) => void;
-  patch: (id: string, patch: Partial<Task>) => void;
-  remove: (id: string) => void;
+  addTask: (title: string, projectId: string, assignees?: string[]) => void;
+  setTaskStatus: (id: string, status: TaskStatus) => void;
+  setTaskAssignees: (id: string, assignees: string[]) => void; // NEW
+  deleteTask: (id: string) => void;
 };
-
-const SEED: Task[] = [
-  { id: "t1", title: "Plan kickoff workshop", status: "inprogress", createdAt: new Date().toISOString() },
-  { id: "t2", title: "Design flyers", status: "todo", createdAt: new Date().toISOString() },
-  { id: "t3", title: "Meet partners – Abobo", status: "done", createdAt: new Date(Date.now() - 86400000 * 10).toISOString(), doneAt: new Date(Date.now() - 86400000 * 7).toISOString() },
-];
 
 export const useTasks = create<TasksState>()(
   persist(
     (set, get) => ({
-      tasks: SEED,
+      tasks: [],
 
-      addTask: (t) =>
+      addTask: (title, projectId, assignees = []) =>
         set((s) => ({
           tasks: [
             ...s.tasks,
             {
-              id: t.id ?? crypto.randomUUID(),
-              createdAt: new Date().toISOString(),
-              ...t,
+              id: nanoid(),
+              title,
+              status: "todo",
+              projectId,
+              assignees,
+              createdAt: Date.now(),
             },
           ],
         })),
 
-      patch: (id, patch) =>
-        set((s) => {
-          const next = s.tasks.map((x) => {
-            if (x.id !== id) return x;
-            const prevStatus = x.status;
-            const newStatus = (patch.status ?? x.status) as Status;
+      setTaskStatus: (id, status) =>
+        set((s) => ({
+          tasks: s.tasks.map((t) => (t.id === id ? { ...t, status } : t)),
+        })),
 
-            let doneAt = x.doneAt;
-            if (prevStatus !== "done" && newStatus === "done" && !doneAt) {
-              doneAt = new Date().toISOString();
-            }
-            if (prevStatus === "done" && newStatus !== "done") {
-              doneAt = undefined;
-            }
+      setTaskAssignees: (id, assignees) =>
+        set((s) => ({
+          tasks: s.tasks.map((t) =>
+            t.id === id ? { ...t, assignees: [...new Set(assignees)] } : t
+          ),
+        })),
 
-            return { ...x, ...patch, status: newStatus, doneAt };
-          });
-          return { tasks: next };
-        }),
-
-      remove: (id) =>
-        set((s) => ({ tasks: s.tasks.filter((t) => t.id !== id) })),
+      deleteTask: (id) =>
+        set((s) => ({
+          tasks: s.tasks.filter((t) => t.id !== id),
+        })),
     }),
-    { name: "sankofa-tasks" }
+    {
+      name: "sankofa/tasks",
+      version: 2,
+      migrate: (persisted: any) => {
+        if (!persisted) return { tasks: [] };
+        const tasks =
+          persisted.tasks?.map((t: any) => ({
+            assignees: Array.isArray(t.assignees) ? t.assignees : [],
+            ...t,
+          })) ?? [];
+        return { tasks };
+      },
+    }
   )
 );

@@ -1,45 +1,60 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import { useEvents } from "@/state/events";
 import styles from "./Calendar.module.scss";
+import { useEvents, type CalendarEvent } from "@/state/events";
 
 export default function EventForm({
-  eventId,
+  editing,
   onSaved,
 }: {
-  eventId?: string | null;
+  editing?: CalendarEvent;
   onSaved?: () => void;
 }) {
-  const { events, add, update } = useEvents();
-  const editing = eventId ? events.find((e) => e.id === eventId) : undefined;
+  const add = useEvents((s) => s.add);
+  const update = useEvents((s) => s.update);
 
   const [title, setTitle] = useState("");
   const [date, setDate] = useState<string>(new Date().toISOString().slice(0, 10));
+  const [link, setLink] = useState<string>("");
 
   useEffect(() => {
     if (editing) {
       setTitle(editing.title);
-      setDate(editing.date);
+      setDate(new Date(editing.start).toISOString().slice(0, 10));
+      setLink(editing.link ?? "");
     } else {
       setTitle("");
       setDate(new Date().toISOString().slice(0, 10));
+      setLink("");
     }
-  }, [eventId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [editing]);
+
+  const toStartIso = (d: string) => new Date(`${d}T09:00:00`).toISOString();
+  const normalizeUrl = (u: string) =>
+    !u.trim() ? "" : /^https?:\/\//i.test(u) ? u.trim() : `https://${u.trim()}`;
+
+  function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!title.trim()) return;
+
+    const start = toStartIso(date);
+    const cleaned = normalizeUrl(link);
+
+    if (editing) {
+      update(editing.id, { title, start, link: cleaned || undefined });
+    } else {
+      add({ title, start, link: cleaned || undefined });
+    }
+
+    onSaved?.();
+    setTitle("");
+  }
 
   return (
     <div className={styles.card}>
       <h3 style={{ marginTop: 0 }}>{editing ? "Edit event" : "New event"}</h3>
-      <form
-        style={{ display: "grid", gap: 8 }}
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (!title.trim()) return;
-          if (editing) update(editing.id, { title, date });
-          else add({ title, date });
-          onSaved?.();
-          setTitle("");
-        }}
-      >
+      <form onSubmit={onSubmit} style={{ display: "grid", gap: 8 }}>
         <input
           className={styles.inp}
           placeholder="Event title…"
@@ -52,15 +67,16 @@ export default function EventForm({
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
-        <div className={styles.btnRow}>
+        <input
+          className={styles.inp}
+          placeholder="Meeting link (Google Meet, Riverside, Zoom)…"
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
+        />
+        <div style={{ display: "flex", gap: 8 }}>
           <button className="btn" type="submit">
-            {editing ? "Update" : "Add"}
+            {editing ? "Save" : "Add"}
           </button>
-          {editing && (
-            <button className="btn" type="button" onClick={() => onSaved?.()}>
-              Cancel
-            </button>
-          )}
         </div>
       </form>
     </div>

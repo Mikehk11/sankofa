@@ -1,0 +1,61 @@
+/* src/styles/theme.css
+   Logo-inspired palette: deep teal + warm cream, muted accents (no flashy hues) */
+
+/* LIGHT */
+:root {
+  --bg:               #d0cec4;
+  --bg-2:             #cfc7b8;
+  --card:             #edeaea;
+
+  --fg:               #182226;
+  --muted:            #6b757b;
+
+  --border:           #dcd7cf;
+
+  --pill-border:          #ced6d9;
+  --pill-border-active:   #bfcad0;
+  --pill-active:          #e5edf0;
+
+  --accent:           #2c5157;   /* muted teal */
+  --accent-contrast:  #d3cdcd;
+
+  --brand:            #0f2830;   /* deep teal (logo background family) */
+  --brand-contrast:   #ece7db;   /* warm cream (logo text) */
+
+  --bar-good:         #7fbf9e;   /* soft green for progress bars */
+  --focus-ring:       0 0 0 3px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+/* DARK (GitHub-like comfortable contrast, true to logo) */
+html[data-theme="dark"] {
+  --bg:               #071115;
+  --bg-2:             #0f1e24;
+  --card:             #1c333e;
+
+  --fg:               #e8e4d9;
+  --muted:            #a3adb5;
+
+  --border:           #13232c;
+
+  --pill-border:          #2a3c46;
+  --pill-border-active:   #324954;
+  --pill-active:          #0f2a34;
+
+  --accent:           #5fa4b0;   /* softened teal for dark */
+  --accent-contrast:  #0c171c;
+
+  --brand:            #0c1f26;
+  --brand-contrast:   #ece7db;
+
+  --bar-good:         #9ad0b4;
+}
+/* Footer background tuned per theme */
+:root {
+  /* slightly darker than the page background in light mode */
+  --footer-bg: color-mix(in srgb, var(--bg) 92%, var(--fg) 8%);
+}
+
+:root[data-theme="dark"] {
+  /* slightly darker plate in dark mode */
+  --footer-bg: color-mix(in srgb, var(--bg) 85%, #000 15%);
+}

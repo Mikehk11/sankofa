@@ -1,15 +1,17 @@
-/* Layout */
+/* Layout wrapper: list (left) + editor/preview (right) */
 .wrap {
   display: grid;
   gap: 16px;
-  grid-template-columns: minmax(260px, 320px) 1fr; /* left column grows a little */
+  grid-template-columns: minmax(280px, 320px) 1fr;
   align-items: start;
 }
 @media (max-width: 1000px) {
   .wrap { grid-template-columns: 1fr; }
 }
 
-/* Left list */
+/* ──────────────────────────────────────────────────────────────
+   LEFT: Documents list
+   ────────────────────────────────────────────────────────────── */
 .sidebar {
   background: var(--card);
   border: 1px solid var(--border);
@@ -29,13 +31,15 @@
   align-items: center;
 }
 
-/* Shrink the Type + Actions columns so they never bleed over the card */
+/* compact “table” header */
 .headRow {
   grid-template-columns: 1fr 72px 160px;
   padding: 6px 8px;
   font-size: 12px;
   opacity: .7;
 }
+
+/* each row item */
 .itemRow {
   grid-template-columns: 1fr 72px minmax(160px, 1fr);
   padding: 8px;
@@ -44,7 +48,7 @@
   background: var(--bg);
 }
 
-/* Title cell truncates long names */
+/* Title cell with icon + ellipsis */
 .titleCell {
   display: flex;
   gap: 8px;
@@ -57,33 +61,51 @@
   text-overflow: ellipsis;
 }
 
+/* small type badge */
 .badge {
   font-size: 11px;
   padding: 2px 8px;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--card);
+  color: var(--fg);
 }
 
-/* Actions wrap on smaller widths */
+/* Actions: wrap when narrow, keep right-aligned */
 .actions {
   display: flex;
   gap: 6px;
   justify-content: flex-end;
   flex-wrap: wrap;
 }
+
+/* small action buttons */
 .miniBtn {
   padding: 6px 10px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: var(--primary);
-  color: #0F2430;
+  background: var(--card);
+  color: var(--fg);
   white-space: nowrap;
+  transition: background .15s ease, border-color .15s ease, transform .04s ease;
 }
-.danger { background: #ffebe9; color: #7a0000; }
+.miniBtn:hover {
+  border-color: color-mix(in srgb, var(--fg) 18%, var(--border));
+  background: color-mix(in srgb, var(--bg) 30%, var(--card));
+}
+.miniBtn:active { transform: translateY(1px); }
 
-/* Right pane (editor / preview) */
-.editorCard, .previewCard {
+.danger {
+  background: #ffebe9;
+  color: #7a0000;
+  border-color: #ffd0cc;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   RIGHT: Editor / Preview panel
+   ────────────────────────────────────────────────────────────── */
+.editorCard,
+.previewCard {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 18px;
@@ -92,11 +114,24 @@
   gap: 12px;
 }
 
+/* two-column split inside the editor area (markdown + preview aside) */
+.editorGridTwoCol {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1.2fr .9fr; /* slightly wider editor */
+}
+@media (max-width: 1100px) {
+  .editorGridTwoCol { grid-template-columns: 1fr; }
+}
+
+/* tiny toolbar row: title input + buttons */
 .toolbar {
   display: flex;
   gap: 8px;
   align-items: center;
 }
+
+/* “back” pill when in preview-only modes (mobile) */
 .backBtn {
   padding: 8px 10px;
   border: 1px solid var(--border);
@@ -105,7 +140,9 @@
   color: var(--fg);
 }
 
-.title, .inp {
+/* title + url inputs */
+.title,
+.inp {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid var(--border);
@@ -114,6 +151,7 @@
   color: var(--fg);
 }
 
+/* main text area (markdown) */
 .area {
   width: 100%;
   min-height: 260px;
@@ -123,8 +161,10 @@
   background: var(--bg);
   color: var(--fg);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  line-height: 1.4;
 }
 
+/* live preview box */
 .previewBox {
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -132,12 +172,18 @@
   background: var(--bg);
 }
 
+/* links section */
 .linkList { display: grid; gap: 6px; }
-.linkItem { display: flex; gap: 8px; align-items: center; overflow-wrap: anywhere; }
+.linkItem {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  overflow-wrap: anywhere;
+}
 
-/* Make the two-column editor section behave on smaller widths */
-@media (max-width: 1100px) {
-  .editorGridTwoCol {
-    grid-template-columns: 1fr !important;
-  }
+/* small focus help for accessibility (applies inside this module only) */
+:where(.miniBtn, .backBtn, .title, .inp, .area):focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--fg) 30%, transparent);
+  outline-offset: 2px;
+  border-color: color-mix(in srgb, var(--fg) 25%, var(--border));
 }
