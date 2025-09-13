@@ -1,25 +1,26 @@
+// src/app/projects/archive/page.tsx
 "use client";
 
 import Link from "next/link";
 import { useMemo } from "react";
 import { format } from "date-fns";
 
-import { useProjects } from "@/state/projects";
-import type { Project } from "@/state/projects";
+import { useProjects, type Project } from "@/state/projects";
 import { useTasks } from "@/state/tasks";
 
 export default function ProjectsArchivePage() {
-  // --- stable store reads (NO new arrays/objects returned by selectors)
+  // Stable store reads
   const projectsMap = useProjects<Record<string, Project>>((s) => s.projects);
   const order       = useProjects<string[]>((s) => s.order);
 
-  const archive = useProjects((s) => s.archiveProject);
-  const setName = useProjects((s) => s.setProjectName);
-  const setDue  = useProjects((s) => s.setProjectDue);
+  const archive        = useProjects((s) => s.archiveProject);
+  const setName        = useProjects((s) => s.setProjectName);
+  const setDue         = useProjects((s) => s.setProjectDue);
+  const deleteProject  = useProjects((s) => s.deleteProject); // permanent delete
 
   const tasks = useTasks((s) => s.tasks);
 
-  // --- derive archived list with useMemo (stable across renders)
+  // Derive archived list once per change
   const archived = useMemo(
     () =>
       order
@@ -67,7 +68,7 @@ export default function ProjectsArchivePage() {
                   </span>
                 </div>
 
-                {/* progress bar */}
+                {/* progress bar (theme color) */}
                 <div
                   style={{
                     height: 10,
@@ -82,17 +83,18 @@ export default function ProjectsArchivePage() {
                       width: `${pct}%`,
                       height: "100%",
                       background:
-                        "linear-gradient(90deg, color-mix(in srgb, #22c55e 85%, transparent), #16a34a)",
+                        "linear-gradient(90deg, color-mix(in oklab, var(--bar-good) 85%, transparent), var(--bar-good))",
                     }}
                   />
                 </div>
 
-                {/* quick edit + restore */}
+                {/* quick edit + restore + delete */}
                 <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                   <input
                     value={p.name}
                     onChange={(e) => setName(p.id, e.target.value)}
                     style={{ minWidth: 220 }}
+                    aria-label="Project name"
                   />
                   <input
                     type="date"
@@ -103,15 +105,31 @@ export default function ProjectsArchivePage() {
                         e.currentTarget.value ? new Date(e.currentTarget.value) : undefined
                       )
                     }
+                    aria-label="Due date"
                   />
-                  <button
-                    className="btn"
-                    onClick={() => archive(p.id, false)}
-                    title="Restore project"
-                    style={{ marginLeft: "auto" }}
-                  >
-                    Restore
-                  </button>
+
+                  <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
+                    <button
+                      className="btn"
+                      onClick={() => archive(p.id, false)}
+                      title="Restore project"
+                      type="button"
+                    >
+                      Restore
+                    </button>
+                    <button
+                      className="btn-destructive"
+                      title="Delete permanently"
+                      type="button"
+                      onClick={() => {
+                        if (window.confirm("Delete this project permanently? This also deletes its tasks.")) {
+                          deleteProject(p.id);
+                        }
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </article>
             );

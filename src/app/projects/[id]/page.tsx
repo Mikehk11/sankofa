@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 
 import { useProjects } from "@/state/projects";
-import { useTasks, TaskStatus } from "@/state/tasks";
+import { useTasks, type TaskStatus } from "@/state/tasks";
 import { USERS } from "@/data/users";
 
 const STATUSES: TaskStatus[] = ["todo", "doing", "review", "done"];
@@ -19,13 +19,15 @@ function colorFromName(name = "User") {
   let h = 0;
   for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) | 0;
   const hue = Math.abs(h) % 360;
-  return `hsl(${h} 60% 60%)`;
+  return `hsl(${hue} 60% 60%)`;
 }
 
 export default function ProjectDetail() {
-  const params = useParams<{ id: string }>(); // Next 15: useParams on client
+  // Next App Router params
+  const params = useParams<{ id: string }>();
   const id = String(params.id);
 
+  // Stable store selectors (single-arg)
   const project = useProjects((s) => s.projects[id]);
   const setName = useProjects((s) => s.setProjectName);
   const archive = useProjects((s) => s.archiveProject);
@@ -35,24 +37,20 @@ export default function ProjectDetail() {
   const setStatus = useTasks((s) => s.setTaskStatus);
   const setAssignees = useTasks((s) => s.setTaskAssignees);
 
+  // UI state
   const [title, setTitle] = useState("");
-  const [picked, setPicked] = useState<string[]>([]); // assignees being picked
+  const [picked, setPicked] = useState<string[]>([]);
 
+  // Assignee helpers
   const allUserIds = USERS.map((u) => u.id);
   const everyone = picked.length === allUserIds.length;
-
   const togglePick = (uid: string) =>
-    setPicked((prev) =>
-      prev.includes(uid) ? prev.filter((x) => x !== uid) : [...prev, uid]
-    );
+    setPicked((prev) => (prev.includes(uid) ? prev.filter((x) => x !== uid) : [...prev, uid]));
   const pickAll = () => setPicked(allUserIds);
   const clearAll = () => setPicked([]);
 
-  const ptasks = useMemo(
-    () => tasks.filter((t) => t.projectId === id),
-    [tasks, id]
-  );
-
+  // Derived data
+  const ptasks = useMemo(() => tasks.filter((t) => t.projectId === id), [tasks, id]);
   const done = ptasks.filter((t) => t.status === "done").length;
   const total = ptasks.length;
   const pct = total ? Math.round((done / total) * 100) : 0;
@@ -70,6 +68,7 @@ export default function ProjectDetail() {
 
   return (
     <div style={{ display: "grid", gap: 16, padding: 16 }}>
+      {/* Header row */}
       <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
         <Link href="/projects" className="btn">
           ← All projects
@@ -86,12 +85,14 @@ export default function ProjectDetail() {
             padding: "6px 10px",
             minWidth: 260,
           }}
+          aria-label="Project name"
         />
         <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
           <button
             className="btn"
             onClick={() => archive(project.id, !project.archived)}
             title={project.archived ? "Unarchive" : "Archive"}
+            type="button"
           >
             {project.archived ? "Unarchive" : "Archive"}
           </button>
@@ -107,13 +108,7 @@ export default function ProjectDetail() {
           border: "1px solid var(--border)",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: 8,
-          }}
-        >
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
           <div style={{ opacity: 0.8, fontWeight: 600 }}>Progress</div>
           <div style={{ fontVariantNumeric: "tabular-nums" }}>{pct}%</div>
         </div>
@@ -125,13 +120,14 @@ export default function ProjectDetail() {
             border: "1px solid var(--border)",
             overflow: "hidden",
           }}
+          aria-label={`Project progress ${pct}%`}
         >
           <div
             style={{
               width: `${pct}%`,
               height: "100%",
               background:
-                "linear-gradient(90deg, color-mix(in srgb, #6ea8fe 70%, transparent), #1e90ff)",
+                "linear-gradient(90deg, color-mix(in oklab, var(--bar-good) 85%, transparent), var(--bar-good))",
             }}
           />
         </div>
@@ -164,17 +160,11 @@ export default function ProjectDetail() {
               border: "1px solid var(--border)",
               background: "var(--card)",
             }}
+            aria-label="New task title"
           />
 
           {/* Assignees picker */}
-          <div
-            style={{
-              display: "flex",
-              gap: 6,
-              alignItems: "center",
-              flexWrap: "wrap",
-            }}
-          >
+          <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
             <span style={{ opacity: 0.8, fontSize: 13 }}>Assign to:</span>
 
             <button
@@ -189,13 +179,14 @@ export default function ProjectDetail() {
 
             {USERS.map((u) => {
               const isOn = picked.includes(u.id);
+              const label = u.name || u.id;
               return (
                 <button
                   key={u.id}
                   type="button"
                   className="btn"
                   onClick={() => togglePick(u.id)}
-                  title={u.name || u.id}
+                  title={label}
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
@@ -214,20 +205,20 @@ export default function ProjectDetail() {
                       fontSize: 11,
                       fontWeight: 800,
                       color: "#0F2430",
-                      background: colorFromName(u.name || u.id),
+                      background: colorFromName(label),
                       border: "1px solid var(--border)",
                     }}
                   >
-                    {initials(u.name || u.id)}
+                    {initials(label)}
                   </span>
-                  <span style={{ fontSize: 12 }}>{u.name || u.id}</span>
+                  <span style={{ fontSize: 12 }}>{label}</span>
                 </button>
               );
             })}
           </div>
         </div>
 
-        <button className="btn">Add task</button>
+        <button className="btn" type="submit">Add task</button>
       </form>
 
       {/* Grouped by status */}
@@ -274,9 +265,7 @@ export default function ProjectDetail() {
                     {/* Assignees badges */}
                     <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                       {t.assignees.length === 0 ? (
-                        <span style={{ opacity: 0.6, fontSize: 12 }}>
-                          Unassigned
-                        </span>
+                        <span style={{ opacity: 0.6, fontSize: 12 }}>Unassigned</span>
                       ) : (
                         t.assignees.map((uid) => {
                           const u = USERS.find((x) => x.id === uid);
@@ -325,11 +314,9 @@ export default function ProjectDetail() {
                         <button
                           key={ns}
                           className="btn"
-                          style={{
-                            opacity: t.status === ns ? 1 : 0.6,
-                            padding: "4px 8px",
-                          }}
+                          style={{ opacity: t.status === ns ? 1 : 0.6, padding: "4px 8px" }}
                           onClick={() => setStatus(t.id, ns)}
+                          type="button"
                         >
                           {ns}
                         </button>
@@ -339,9 +326,7 @@ export default function ProjectDetail() {
                 ))}
 
                 {list.length === 0 && (
-                  <div style={{ opacity: 0.7, fontSize: 13 }}>
-                    No tasks in {s}.
-                  </div>
+                  <div style={{ opacity: 0.7, fontSize: 13 }}>No tasks in {s}.</div>
                 )}
               </div>
             </section>

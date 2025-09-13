@@ -17,4 +17,4 @@ out/
 dist/
 coverage/
 .vscode/
-.idea/
+.idea/.next/

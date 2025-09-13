@@ -2,7 +2,7 @@
   "name": "sankofa",
   "private": true,
   "scripts": {
-    "dev": "next dev",             
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "clean": "rimraf .next node_modules/.cache",
@@ -12,6 +12,7 @@
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
+    "@prisma/client": "^6.15.0",
     "date-fns": "^4.1.0",
     "nanoid": "^5.1.5",
     "next": "^15.5.0",
@@ -23,6 +24,7 @@
     "@types/node": "^24.3.0",
     "@types/react": "^19.1.11",
     "@types/react-dom": "^19.1.7",
+    "prisma": "^6.15.0",
     "rimraf": "^6.0.1",
     "sass": "^1.90.0",
     "typescript": "^5.9.2"

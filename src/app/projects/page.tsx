@@ -13,10 +13,11 @@ export default function ProjectsPage() {
   const projectsMap = useProjects<Record<string, Project>>((s) => s.projects);
   const order       = useProjects<string[]>((s) => s.order);
 
-  const addProject = useProjects((s) => s.addProject);
-  const archive    = useProjects((s) => s.archiveProject);
-  const setName    = useProjects((s) => s.setProjectName);
-  const setDue     = useProjects((s) => s.setProjectDue);
+  const addProject     = useProjects((s) => s.addProject);
+  const archive        = useProjects((s) => s.archiveProject);
+  const setName        = useProjects((s) => s.setProjectName);
+  const setDue         = useProjects((s) => s.setProjectDue);
+  const deleteProject  = useProjects((s) => s.deleteProject); // new
 
   const tasks = useTasks((s) => s.tasks);
 
@@ -41,7 +42,7 @@ export default function ProjectsPage() {
   );
 
   return (
-    <section className="stack">
+    <section style={{ display: "grid", gap: 16 }}>
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <h1 style={{ margin: 0, fontSize: 22, fontWeight: 700 }}>Projects</h1>
@@ -53,11 +54,22 @@ export default function ProjectsPage() {
       </div>
 
       {/* Add new project */}
-      <form onSubmit={onAdd} className="form-row card" style={{ padding: 12, alignItems: "center" }}>
+      <form
+        onSubmit={onAdd}
+        className="card"
+        style={{
+          padding: 12,
+          display: "grid",
+          gap: 8,
+          gridTemplateColumns: "1fr 180px auto",
+          alignItems: "center",
+        }}
+      >
         <input
           placeholder="New project name…"
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
+          aria-label="Project name"
         />
         <input
           type="date"
@@ -88,6 +100,7 @@ export default function ProjectsPage() {
                   gap: 10,
                 }}
               >
+                {/* Top row: name + meta */}
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <Link
                     href={`/projects/${p.id}`}
@@ -114,6 +127,7 @@ export default function ProjectsPage() {
                     border: "1px solid var(--border)",
                     overflow: "hidden",
                   }}
+                  aria-label={`Progress ${pct}%`}
                 >
                   <div
                     style={{
@@ -125,12 +139,13 @@ export default function ProjectsPage() {
                   />
                 </div>
 
-                {/* quick inline edit */}
+                {/* quick inline edit + actions */}
                 <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                   <input
                     value={p.name}
                     onChange={(e) => setName(p.id, e.target.value)}
                     style={{ minWidth: 220 }}
+                    aria-label={`Rename project ${p.name}`}
                   />
                   <input
                     type="date"
@@ -141,15 +156,31 @@ export default function ProjectsPage() {
                         e.currentTarget.value ? new Date(e.currentTarget.value) : undefined
                       )
                     }
+                    aria-label="Edit due date"
                   />
-                  <button
-                    className="btn-secondary"
-                    onClick={() => archive(p.id, true)}
-                    title="Archive project"
-                    style={{ marginLeft: "auto" }}
-                  >
-                    Archive
-                  </button>
+
+                  <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
+                    <button
+                      className="btn-secondary"
+                      onClick={() => archive(p.id, true)}
+                      title="Archive project"
+                      type="button"
+                    >
+                      Archive
+                    </button>
+                    <button
+                      className="btn-destructive"
+                      onClick={() => {
+                        if (confirm(`Delete “${p.name}” and all its tasks? This cannot be undone.`)) {
+                          deleteProject(p.id);
+                        }
+                      }}
+                      title="Delete project"
+                      type="button"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </article>
             );
